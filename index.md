@@ -8,7 +8,8 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown Syntax highlighted code block
+```markdown 
+Syntax highlighted code block
 
 <table>
   <tr>
@@ -18,7 +19,7 @@ Markdown is a lightweight and easy-to-use syntax for styling your writing. It in
     <td>percentage</td>
   </tr>
  </table>
- 
+``` 
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
