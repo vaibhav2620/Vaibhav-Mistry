@@ -12,10 +12,35 @@ Markdown is a lightweight and easy-to-use syntax for styling your writing. It in
   <tr>
     <td>semester</td>
     <td>year of passing</td>
-    <td>marks obtained</td>
-    <td>percentage</td>
+    <td>SGP</td>
+    <td>CGP</td>
   </tr>
+  <tr>
+    <td>IV</td>
+    <td>2020</td>
+    <td>....</td>
+    <td>....</td>
+  </tr>
+  <tr>
+    <td>III</td>
+    <td>2019</td>
+    <td>....</td>
+    <td>....</td>
+  </tr>
+  <tr>
+    <td>II</td>
+    <td>2019</td>
+    <td>....</td>
+    <td>....</td>
+  </tr>
+    <tr>
+    <td>I</td>
+    <td>2018</td>
+    <td>....</td>
+    <td>....</td>
+  </tr>      
  </table>
+
 
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
