@@ -233,14 +233,19 @@ body {
   display: none;
 }
 
-.quote .regular{
-   padding-top:10px ;
-   font-size: 20px;
-   word-spacing: 5px;
-   margin-bottom: 25px;
+.quote .regular {
+  padding-top: 10px;
+  font-size: 20px;
+  word-spacing: 5px;
+  margin-bottom: 25px;
 }
 
-.quote{
+.quote {
   margin-top: 25px;
   border-bottom: 2px solid #f6b1ff;
+}
+
+.social-links {
+  text-decoration: none;
+  color: #b1eaff;
 }
