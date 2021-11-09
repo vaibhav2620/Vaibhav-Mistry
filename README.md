@@ -1,2 +1,1 @@
-# Resume-CV-Design-N19
-How to create the Resume/CV Design using HTML and CSS
+https://vaibhav2620.github.io/Vaibhav-Mistry/
