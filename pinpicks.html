@@ -3,18 +3,27 @@
 <head>
   <title>Open Chrome</title>
 </head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle;
+    }
+    a{
+        margin-top:20%;
+    }
+</style>
 <body>
 
     <a href="intent://vaibhav2620.github.io/Vaibhav-Mistry/page1.html#Intent;scheme=https;package=com.android.chrome;end">Open in Chrome</a>
 <br><br>
 
-  <p>Click here to open Chrome:</p>
-  <a href="javascript:void(0);" onclick="openChrome()">Open Chrome</a>
-  <script>
-    function openChrome() {
-      // This code will open Chrome
-      window.location.href = "chrome://"; // Or use the appropriate URL for your Chrome application
-    }
-  </script>
+
 </body>
+<script>
+    window.onload = function() {
+        window.location.href = "intent://vaibhav2620.github.io/Vaibhav-Mistry/page1.html#Intent;scheme=https;package=com.android.chrome;end"; // Change this to your desired link
+    };
+</script>
 </html>
