@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Upload    </title>
+
+<style>
+    body{
+        background-color: #463047;
+        color: white;
+        font-size: small;
+        margin-left: 30%;
+    }
+    input{
+        border-radius: 10%;
+        background-color: lightgray;
+    }
+    .dataform{
+        padding: 5%;
+        width: 40%;
+        background-image: linear-gradient(to right,#664967, rgb(61, 61, 61));
+        border-radius: 5%;
+    }
+</style>
+
+    <!-- Firebase App (the core Firebase SDK) -->
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
+        import { getFirestore, collection, getDocs, setDoc, doc, addDoc } from 'https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js';
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyA2Ggx1HnK-hAG629l3Nemh224TJuqfOzc",
+        authDomain: "pinpicks-52aef.firebaseapp.com",
+        projectId: "pinpicks-52aef",
+        storageBucket: "pinpicks-52aef.firebasestorage.app",
+        messagingSenderId: "599911542719",
+        appId: "1:599911542719:web:436a474138b52736507b0a",
+        measurementId: "G-KY53Q7JLPM"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Initialize Firestore
+        const db = getFirestore(app);
+            // Function to handle form submission
+            document.getElementById("productForm").addEventListener("submit",async function(event) {
+            event.preventDefault();  // Prevent default form submission
+
+            // Get form values
+            const productName = document.getElementById("productName").value;
+            const productID = document.getElementById("productID").value;
+            const productLink = document.getElementById("productLink").value;
+            const imageSource = document.getElementById("imageSource").value;
+
+            // Add data to Firestore
+            try {
+                // Add Document to Firestore
+                await addDoc(collection(db, "products"), {
+                    name: productName,
+                    id: productID,
+                    link: productLink,
+                    image: imageSource,
+                    timestamp: new Date()
+                });
+
+                alert("Product added successfully!");
+            } catch (error) {
+                console.error("Error adding product: ", error);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h2>Add Product to Firestore</h2>
+    <form id="productForm" class="dataform">
+        <label>Product Name:</label>
+        <input type="text" id="productName" required><br><br>
+
+        <label>Product ID:</label>
+        <input type="text" id="productID" required><br><br>
+
+        <label>Product Link:</label>
+        <input type="url" id="productLink" required><br><br>
+
+        <label>Image Source URL:</label>
+        <input type="url" id="imageSource" required><br><br>
+
+        <button type="submit">Add Product</button>
+    </form>
+
+
+
+</body>
+</html>
