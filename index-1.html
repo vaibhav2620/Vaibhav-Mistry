@@ -6,11 +6,13 @@
 	<link rel="stylesheet" href="styles.css">
   <link rel="icon" href="./assets/jpeg/titlelogo.png" type="image/icon type">
   <script src="https://kit.fontawesome.com/45e7786e2f.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
 </head>
 <body>
-<div class="container">
+<p>Download Page to pdf</p><img src="./assets/svg/download.png" class="download - app"style = "width:20px;height:20px; margin-left:90%;" onclick="downloadPDF()">
+<div class="container" id="container">
 <div class="resume">
    <div class="resume_left">
      <div class="resume_profile">
@@ -357,4 +359,20 @@
 <div style="margin-left:50% ;"><a href="./page1.html" style=" color:white">Affiliate links</a></div>
 
 </body>
+
+<script>
+  function downloadPDF() {
+    const element = document.getElementById('container');
+    html2pdf()
+      .set({
+        margin: 0,
+        filename: 'downloaded-ui.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 1 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      })
+      .from(element)
+      .save();
+  }
+</script>
 </html>
