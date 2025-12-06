@@ -1,378 +1,690 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Vaibhav Mistry - Resume</title>
-	<link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="./assets/jpeg/titlelogo.png" type="image/icon type">
-  <script src="https://kit.fontawesome.com/45e7786e2f.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaibhav Vimal Mistry - Resume</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .tagline {
+            font-size: 18px;
+            font-weight: 300;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .contact-item::before {
+            content: '●';
+            color: #ffd700;
+            font-size: 10px;
+        }
+        
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 6px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+        }
+        
+        .summary {
+            font-size: 13px;
+            line-height: 1.8;
+            color: #555;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e0e6ed;
+            transition: all 0.3s;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        .skill-label {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .skill-label::before {
+            content: '▶';
+            color: #764ba2;
+            font-size: 10px;
+        }
+        
+        .skill-items {
+            font-size: 11.5px;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .job-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+        
+        .job-item::before {
+            content: '';
+            position: absolute;
+            left: -46px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+        
+        .job-header {
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .company {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .job-title {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 600;
+            display: inline-block;
+            margin-right: 15px;
+        }
+        
+        .date {
+            font-size: 11px;
+            color: #888;
+            font-style: italic;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .job-description ul {
+            margin-left: 20px;
+        }
+        
+        .job-description li {
+            font-size: 12px;
+            margin-bottom: 10px;
+            line-height: 1.7;
+            color: #555;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        .job-description li::marker {
+            color: #667eea;
+        }
+        
+        .education-card {
+            background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s;
+        }
+        
+        .education-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+        }
+        
+        .education-header {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .education-details {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .cert-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .cert-item {
+            background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
+            font-size: 12px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+        }
+        
+        .cert-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+        }
+        
+        .cert-item::before {
+            content: '🏆';
+            font-size: 20px;
+        }
+        
+        .cert-item strong {
+            color: #667eea;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .skill-card:hover,
+            .job-item:hover,
+            .cert-item:hover {
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+                background: white;
+            }
+            
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header::before,
+            .header::after {
+                display: none;
+            }
+            
+            .header h1 {
+                font-size: 28px;
+                letter-spacing: 1px;
+            }
+            
+            .tagline {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 8px;
+                align-items: stretch;
+            }
+            
+            .contact-item {
+                justify-content: center;
+                padding: 10px 15px;
+                font-size: 11px;
+            }
+            
+            .content {
+                padding: 25px 20px;
+            }
+            
+            .section {
+                margin-bottom: 25px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+                gap: 10px;
+            }
+            
+            .section-title::before {
+                width: 4px;
+                height: 24px;
+            }
+            
+            .summary {
+                font-size: 12px;
+                padding: 15px;
+                line-height: 1.7;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .skill-card {
+                padding: 15px;
+            }
+            
+            .skill-label {
+                font-size: 12px;
+            }
+            
+            .skill-items {
+                font-size: 11px;
+            }
+            
+            .timeline {
+                padding-left: 25px;
+            }
+            
+            .timeline::before {
+                width: 2px;
+            }
+            
+            .job-item {
+                margin-bottom: 25px;
+            }
+            
+            .job-item::before {
+                left: -31px;
+                width: 12px;
+                height: 12px;
+                border-width: 2px;
+            }
+            
+            .job-header {
+                padding: 12px;
+            }
+            
+            .company {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .job-title {
+                font-size: 13px;
+                display: block;
+                margin-bottom: 8px;
+            }
+            
+            .date {
+                font-size: 10px;
+                display: inline-block;
+                margin-bottom: 5px;
+            }
+            
+            .job-description ul {
+                margin-left: 15px;
+            }
+            
+            .job-description li {
+                font-size: 11px;
+                margin-bottom: 8px;
+                line-height: 1.6;
+                padding-left: 5px;
+            }
+            
+            .education-card {
+                padding: 15px;
+            }
+            
+            .education-header {
+                font-size: 13px;
+                line-height: 1.4;
+            }
+            
+            .education-details {
+                font-size: 11px;
+                line-height: 1.5;
+            }
+            
+            .cert-list {
+                gap: 12px;
+            }
+            
+            .cert-item {
+                padding: 12px 15px;
+                font-size: 11px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .cert-item::before {
+                font-size: 18px;
+            }
+            
+            /* Disable hover effects on mobile */
+            .skill-card:hover,
+            .education-card:hover,
+            .cert-item:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .contact-item:hover {
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .tagline {
+                font-size: 13px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+            
+            .summary {
+                font-size: 11px;
+            }
+        }
+    </style>
 </head>
 <body>
-<p>Download Page to pdf</p><img src="./assets/svg/download.png" class="download - app"style = "width:20px;height:20px; margin-left:90%;" onclick="downloadPDF()">
-<div class="container" id="container">
-<div class="resume">
-   <div class="resume_left">
-     <div class="resume_profile">
-       <div class="title-mobile">
-        <p class="bold Name">vaibhav mistry</p>
-        <p class="regular role">Full Stack Developer</p>
-      </div>
-      <img src="./photo.jpg" alt="profile_pic" >
-
-     </div>
-     <div class="resume_content">
-       <div class="resume_item resume_info">
-         <div class="title-desktop">
-           <p class="bold Name">vaibhav mistry</p>
-           <p class="regular role">Full Stack Developer</p>
-         </div>
-         <ul>
-           <li>
-             <div class="icon">
-               <i class="fas fa-map-signs"></i>
-             </div>
-             <div class="data">
-              <p style="font-size: smaller;">ShantiNath Empress,<br> Poonam Sagar Complex, Mira Road</p>
-             </div>
-           </li>
-           <li>
-             <div class="icon">
-               <i class="fas fa-mobile-alt"></i>
-             </div>
-             <div class="data">
-               +91 7039246827
-             </div>
-           </li>
-           <li>
-             <div class="icon">
-               <i class="fas fa-envelope"></i>
-             </div>
-             <div class="data">
-                      vmistry2620<br>@gmail.com
-             </div>
-           </li>
-           <!-- <li>
-             <div class="icon">
-               <i class="fab fa-weebly"></i>
-             </div>
-             <div class="data">
-              https://development.<br>science.blog/
-             </div>
-           </li> -->
-         </ul>
-       </div>
-       <div class="resume_item resume_skills">
-         <div class="title">
-           <p class="bold">skill's</p>
-         </div>
-         <ul>
-	   <li>
-             <div class="skill_name">
-               Spring Framework<br>(boot/MVC)
-             </div>
-             <div class="skill_per">2 years</div>
-           </li>
-           <li>
-            <div class="skill_name">
-              Angular 
-            </div>
-            <div class="skill_per">1.5+ years</div>
-          </li>
-	   <li>
-             <div class="skill_name">
-               DataBase Management system - Oracle 19c/MySql 
-             </div>
-             <div class="skill_per">2 years</div>
-           </li>
-           <li>
-              <div class="skill_name">
-                Frontend stack (HTML,CSS,JS) 
-              </div>
-              <div class="skill_per">4+ years</div>
-            </li>
-            <li>
-              <div class="skill_name">
-                Java
-              </div>
-             <div class="skill_per">3+ years</div>
-           </li>
-
-	        <li>
-             <div class="skill_name">
-              C++,Python 
-             </div>
-            <div class="skill_per">1 year</div>
-          </li>
-          <li>
-            <div class="skill_name">
-              PHP
-            </div>
-           <div class="skill_per">1+ years</div>
-         </li>
-           </li>
-         </ul>
-       </div>
-       <div class="resume_item resume_social">
-         <div class="title">
-           <p class="bold">Social</p>
-         </div>
-         <ul>
-           <li>
-             <div class="icon">
-               <i class="fab fa-facebook-square"></i>
-             </div>
-             <div class="data">
-               <p class="semi-bold">Facebook</p>
-               <p><a href="https://www.facebook.com/profile.php?id=100008584891599"class="social-links"> Vaibhav Mistry@facebook</a></p>
-             </div>
-           </li>
-           <li>
-             <div class="icon">
-               <i class="fab fa-twitter-square"></i>
-             </div>
-             <div class="data">
-               <p class="semi-bold">Twitter</p>
-               <p><a href="https://twitter.com/Vaibhav_2620"class="social-links" >Vaibhav_2620@twitter</a></p>
-             </div>
-           </li>
-           <li>
-             <div class="icon">
-               <i class="fab fa-linkedin"></i>
-             </div>
-             <div class="data">
-               <p class="semi-bold">linkedin</p>
-               <p><a href="https://www.linkedin.com/in/vaibhav-m-b21769136" class="social-links" target=”_blank”>linkedin.com/in/vaibhav<br>-m-b21769136</a> </p>
-             </div>
-           </li>
-           <li>
-             <div class="icon">
-               <i class="fab fa-github"></i>
-             </div>
-             <div class="data">
-               <p class="semi-bold">github</p>
-               <p><a href="https://vaibhav2620.github.io/Vaibhav-Mistry/" class="social-links">github.com/vaibhav2620</a></p>
-             </div>
-           </li>
-           <li>
-            <div class="icon">
-              <i class="fab fa-codepen"></i>
-            </div>
-            <div class="data">
-              <p class="semi-bold">CodePen</p>
-              <p><a href="https://codepen.io/vaibhav2620" class="social-links">codepen.io/vaibhav2620</a></p>
-            </div>
-          </li>
-         </ul>
-       </div>
-     </div>
-  </div>
-  <div class="resume_right">
-    <div class="resume_item resume_about">
-        <div class="title">
-           <p class="bold">About </p>
-         </div>
-        <p></p>
-    </div>
-     
-	  	  
-	  <div class="resume_item resume_education">
-      <div class="title">
-           <p class="bold">Experience</p>
-         </div>
-      <ul>
-        <li>
-            <div class="date" style="font-size: 3vh;"><i>August 2024 - Present</i></div>
-            <div class="info">
-            <p class="semi-bold" style="font-size: 25px;"><b>Packaged App Development - Associate</b> </p> 
-            <p style="font-size: 20px; margin-top:10px ;">at Accenture  - Project Fedex</p>
-            <p></p>
-            <img src = "./assets/png/download.png" style="width:150px; height:75px">
-           </div>
-        </li>
-        <li>
-		      <div class="date" style="font-size: 3vh;"><i>Sept 2022 - July 24</i></div>
-          <div class="info">
-          <p class="semi-bold" style="font-size: 25px;"><b>Associate Consultant - Full Stack Developer</b> </p> 
-          <p style="font-size: 20px; margin-top:10px ;">at Atos (Now Eviden) - Project Fedex</p>
-          <p></p>
-		      <img src = "./assets/jpeg/Logo .png" style="width:150px; height:75px">
-         </div>
-	      </li>
-          <li>
-	          <li>
-                <div class="date" style="font-size: 3vh;"><i>March 2022 - June 2022</i></div> 
-                <div class="info">
-                  <p class="semi-bold" style="font-size: 25px;"><b>Java Intern - Summer Internship</b></p> 
-                  <p style="font-size: 20px; margin-top:10px ;">At Wipro</p>
-		            <img src = "./assets/jpeg/wipro.png" style="width:15vh; height:10vh;">
-		            </div>
-	          </li>
-          </li>
-        
-            <li>
-                <div class="date" style="font-size: 3vh;"><i>Nov 2020- Dec 2020 </i></div> 
-                <div class="info">
-                     <p class="semi-bold" style="font-size: 20px;"><b>Web Development Intern</b></p> 
-                  <p style="font-size: 20px; margin-top:10px ;">At E-SWADHYAY (Banglore based Start up) <br>under Guidence of Chinmay jain(Founder)</p>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>VAIBHAV VIMAL MISTRY</h1>
+                <div class="tagline">Full Stack Developer | Spring Boot & Angular Specialist</div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <a href="mailto:vaibhavmistry2620@gmail.com">vaibhavmistry2620@gmail.com</a>
+                    </div>
+                    <div class="contact-item">+91 7039246827</div>
+                    <div class="contact-item">Mumbai, India</div>
+                    <div class="contact-item">
+                        <a href="https://www.linkedin.com/in/vaibhav-mistry" target="_blank">LinkedIn</a>
+                    </div>
                 </div>
-	      </li>
-        </ul>
-    </div>
-	  	  
-    <div class="resume_item resume_education">
-      <div class="title">
-           <p class="bold">Education</p>
-         </div>
-      <ul>
-            <li>
-                <div class="date">June 2018 - May 2022  </div> 
-                <div class="info">
-                     <p class="semi-bold">Bachelor Of Engineering(B.E)(Information Technology.  (CGPA :8.23)</p> 
-                  <p>Shree L.R.Tiwari college of engineering</p>
-                </div>
-            </li>
-            <li>
-              <div class="date">2016 - 2018</div>
-              <div class="info">
-                     <p class="semi-bold">HSC (75.38%) </p> 
-                  <p>Shree T.P.Bhatia college of science, Kandivali. </p>
-                </div>
-            </li>
-            <li>
-              <div class="date">2016</div>
-              <div class="info">
-                     <p class="semi-bold">SSC (83%) </p> 
-                  <p>Shantinagar High school, Mira Road. </p>
-                </div>
-            </li>
-        </ul>
-    </div>
-	  
-	  
-	  
-
-	  
-	  
-	  
-	  
-	  
-    <div class="resume_item resume_work">
-      <div class="title">
-         <p class="bold">Project </p>
-       </div>
-	<ul>
-    <li>
-      <div class="date"><b>Pehnava.co</b> </div>
-      <div class="info">
-       <p class="semi-bold">E-commerse webapplication (Capestone Project)</p> 
-          <p>E-commerse webapplication that included section for both customer Shopping section 
-            and admin section i.e. Business Owner section for cataloging and adding Discount Coupons</p>
+            </div>
         </div>
-      </li>
-	  <li>
-	  <div class="date"><b>Political Evaluation Based on Sentiment Analysis(PEBSOA)</b></div>
-	  <div class="info">
-		 <p class="semi-bold">Big data Project (Final Year Project)  </p> 
-	      <p>Big data project for Predecting or evaluating the Public sentiment on the candidates running for election so as to help public make better choices.</p>
-	    </div>
-        </li>
-        <li>
-	  <div class="date"><b>URBANhelp</b> </div>
-	  <div class="info">
-		 <p class="semi-bold">Service Management System (At E-SWADHYAY Internship) </p> 
-	      <p>Service management system with a client server architecture helps in providing different services to the people living in the city.</p>
-	    </div>
-        </li>
-      </ul>
-  </div>
-  <div class="quote">
 
-    <p class="bold">Certification and Research paper publications</p>
-    <ul>
+        <div class="content">
+            <div class="section">
+                <div class="section-title">Professional Summary</div>
+                <div class="summary">
+                    Results-driven Java Full Stack Developer with 3+ years of hands-on experience designing, developing, and deploying enterprise-grade web applications using Spring Boot, Angular, and Oracle Database. Expertise in architecting RESTful APIs, implementing microservices architecture, and optimizing both frontend and backend performance. Proficient in CI/CD automation with Jenkins, GitHub version control, and Agile methodologies. Proven track record of reducing page load times by 30%, improving team velocity by 20%, and successfully bridging technical gaps between frontend and backend development teams to deliver seamless, high-quality solutions.
+                </div>
+            </div>
 
-      <li>
-        <p class="semi-bold">
-          <b><br>Microsoft Azure Fundamentals AZ-900 certified</b> <br>
-          <p class="regular">
-            Certification number: FB1B5A-A5AYF5
-            <br>
-          <a href = "https://learn.microsoft.com/en-us/users/vaibhavmistry-2401/transcript/dg1jqcemknrq2qm" target="_blank" style="text-decoration: none;color: blue;">View Transcript.</a> 
-          </p>
-        </p>
-      </li>
-         <li>
-          <p class="semi-bold">
-            <b><br>Awarded Best performer of PI twise in one year By the Client - Fedex</b> <br>
-            <p class="regular">
-              SuperStart of the PI
-            <a href = "./assets/jpeg/IMG-20240118-WA0004.jpg" target="_blank" style="text-decoration: none;color: blue;">Certificate.</a> 
-            </p>
-          </p>
-        </li>
+            <div class="section">
+                <div class="section-title">Technical Expertise</div>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <div class="skill-label">Backend Technologies</div>
+                        <div class="skill-items">Java 8, J2EE, Spring Boot, Spring MVC, Spring Batch, Microservices Architecture, RESTful APIs</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-label">Frontend Technologies</div>
+                        <div class="skill-items">Angular 9+, TypeScript, HTML5, CSS3, JavaScript, Responsive Web Design, UI/UX</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-label">Database & Persistence</div>
+                        <div class="skill-items">Oracle 19c, MySQL, SQL Optimization, Query Performance Tuning</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-label">DevOps & Tools</div>
+                        <div class="skill-items">Jenkins (CI/CD), GitHub, Docker, PuTTY, WebdriverIO, Automated Deployments</div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-label">Software Engineering</div>
+                        <div class="skill-items">OOP, AOP, Design Patterns, DSA, UML Diagrams, Agile/Scrum</div>
+                    </div>
+                </div>
+            </div>
 
-       <li>
-          <p class="semi-bold">
-            <b><br>Published paper At an the International conference</b> <br>
-            <p class="regular">
-            Research paper was based on the Big data project i.e. Political Evaluation Based on Sentiment analysis.<br>
-            <a href = "./assets/jpeg/Best paper ICETTSE.png" target="_blank" style="text-decoration: none;color: blue;"> Won Prize for Best paper At the Conference.</a> 
-            </p>
-          </p>
-      </li>
-<li>
-    <p class="semi-bold">
-      <b>Workshop on Advance Python</b> <br>
-      <p class="regular">
-        by FOSSEE project, IIT Bombay
-      
-      </p>
-    </p>
-  </li>
-  <li>
-    <p class="semi-bold">
-     <br> <b>Ethical Hacking Workshop</b> 
-    </p>
-    <p class="regular">
-    Conducted by Kyrion Pvt. Ltd.  at IIT Bombay 
-    </p>
-  </li>
-  </ul>
-  </div>
-    <div class="resume_item resume_hobby">
-      <div class="title">
-           <p class="bold">Hobby</p>
-         </div>
-       <ul>
-         <li><i class="fa fa-book"></i></li>
-         <li><i class="fas fa-dumbbell"></i></li>
-         <li><i class="fa fa-music"></i></li>
-         <li><i class='fa fa-comments'></i></li>
-      </ul>
+            <div class="section">
+                <div class="section-title">Professional Experience</div>
+                <div class="timeline">
+                    <div class="job-item">
+                        <div class="job-header">
+                            <div class="company">Accenture</div>
+                            <span class="job-title">Packaged App Development Analyst</span>
+                            <span class="date">August 2024 – Present</span>
+                        </div>
+                        <div class="job-description">
+                            <ul>
+                                <li>Architect and develop scalable enterprise applications using Spring Boot framework with emphasis on performance optimization and code maintainability</li>
+                                <li>Implement Spring MVC design patterns and Spring Batch processing for high-volume data operations, ensuring efficient resource utilization</li>
+                                <li>Lead cross-functional collaboration between Angular frontend and Spring Boot backend teams, facilitating seamless API integration</li>
+                                <li>Optimize CI/CD pipelines using Jenkins for automated deployments, reducing deployment time through GitHub integration</li>
+                                <li>Mentor junior developers on best practices in full stack development, code reviews, and Agile sprint planning</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="job-item">
+                        <div class="job-header">
+                            <div class="company">ATOS (now Eviden)</div>
+                            <span class="job-title">Associate Consultant</span>
+                            <span class="date">September 2022 – July 2024</span>
+                        </div>
+                        <div class="job-description">
+                            <ul>
+                                <li>Designed and implemented 15+ RESTful APIs using Spring Boot, improving application response time by 25% through efficient query optimization</li>
+                                <li>Achieved 30% reduction in frontend page load time by optimizing Angular components and implementing lazy loading strategies</li>
+                                <li>Orchestrated end-to-end integration between Spring Boot microservices, Angular frontend, and Oracle 19c database</li>
+                                <li>Established GitHub branching strategy and code review processes, reducing merge conflicts by 15%</li>
+                                <li>Contributed to Agile sprint ceremonies, increasing team velocity by 20% through effective task breakdown and technical debt management</li>
+                                <li>Received FedEx "Super Star of PI CY23-04" Agile Award for outstanding contribution to project delivery and client satisfaction</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="job-item">
+                        <div class="job-header">
+                            <div class="company">Wipro Limited</div>
+                            <span class="job-title">Summer Intern – Software Development</span>
+                            <span class="date">March 2022 – June 2022</span>
+                        </div>
+                        <div class="job-description">
+                            <ul>
+                                <li>Collaborated with a 10-member remote development team to build backend services using Spring Boot and Spring MVC</li>
+                                <li>Participated in designing system architecture and created UML diagrams to enhance project documentation</li>
+                                <li>Gained practical experience in RESTful API development, database integration, and business logic implementation</li>
+                                <li>Contributed to code reviews and learned industry best practices in software development lifecycle</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Education</div>
+                <div class="education-card">
+                    <div class="education-header">Bachelor of Engineering (B.E.) in Information Technology</div>
+                    <div class="education-details">
+                        Shree L.R. Tiwari College of Engineering, Mumbai University | Graduated: 2022 | CGPA: 8.23/10
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Certifications & Achievements</div>
+                <div class="cert-list">
+                    <div class="cert-item">
+                        <div>
+                            <strong>Microsoft Azure Fundamentals (AZ-900)</strong> – Microsoft Certified (December 2022)
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <div>
+                            <strong>FedEx "Super Star of PI CY23-04" Agile Award</strong> – Client recognition for exceptional Agile delivery (December 2023)
+                        </div>
+                    </div>
+                    <div class="cert-item">
+                        <div>
+                            <strong>Best Research Paper Award</strong> – "Political Evaluation using Big Data" at ICETTSE Conference (May 2022)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  <div style="margin-left:50%;margin-top: 10px;"><a href="./index1.html" style="font-size: larger;color: white;text-decoration: none;"><b>Portfolio</b></a></div>
-  </div>
-</div>
-</div>
-<div style="margin-left:50% ;"><a href="./page1.html" style=" color:white">Affiliate links</a></div>
-
 </body>
-
-<script>
-  function downloadPDF() {
-    const element = document.getElementById('container');
-    html2pdf()
-      .set({
-        margin: 0,
-        filename: 'downloaded-ui.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 1 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-      })
-      .from(element)
-      .save();
-  }
-</script>
 </html>

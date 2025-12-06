@@ -702,3 +702,41 @@ textarea {
   to {
     opacity: 0;
     top: 27px; } }
+
+.experience-logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  background: #fff;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.projects__row.experience-row {
+  grid-template-columns: 0.5fr 2fr;
+  align-items: center;
+  background: #f8f8f8;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  padding: 2rem 1rem;
+  margin-bottom: 3rem;
+}
+
+.projects__row.experience-row .projects__row-img-cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.projects__row.experience-row .projects__row-content {
+  padding-left: 2rem;
+}
+
+.projects__row-content-title {
+  margin-bottom: 1rem;
+}
