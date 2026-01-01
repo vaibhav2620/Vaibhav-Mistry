@@ -1,3 +1,21 @@
+// const filters = document.querySelectorAll('input[name="toggle"]');
+// const cards = document.querySelectorAll('.product-card');
+
+// filters.forEach(filter => {
+//   filter.addEventListener('change', () => {
+//     const value = filter.value;
+
+//     cards.forEach(card => {
+//       if (value === 'all' || card.dataset.category === value) {
+//         card.style.display = 'flex';
+//       } else {
+//         card.style.display = 'none';
+//       }
+//     });
+//   });
+// });
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const options = document.querySelectorAll(".toggle-container input");
     const slider = document.querySelector(".toggle-slider");
@@ -53,4 +71,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize everything on page load
     updateSlider();
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const radioButtons = document.querySelectorAll('input[name="toggle"]');
+    const products = document.querySelectorAll('.product-card');
+
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            const category = e.target.value;
+
+            products.forEach(product => {
+                const productCategory = product.getAttribute('data-category');
+
+                if (category === 'all') {
+                    product.classList.remove('hidden');
+                } else {
+                    if (productCategory === category) {
+                        product.classList.remove('hidden');
+                    } else {
+                        product.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    });
 });

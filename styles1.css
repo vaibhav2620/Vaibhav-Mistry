@@ -1,14 +1,183 @@
-/* Global Styles */
-body {
-  background-color: #463047;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: white;
-  text-align: center;
-  height: 100%; /* Full height of the screen */
-  display: flex;
-  flex-direction: column;
+/* --- Global Reset & Variables --- */
+:root {
+    --bg-color: #463047;
+    --card-bg: #1a1a1a;
+    --text-color: #ffffff;
+    --accent: #d896ff;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Header Styling --- */
+header {
+    padding: 20px;
+    text-align: center;
+}
+
+.social-bar a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.brand-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.1);
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+/* --- Navigation / Filter Toggle --- */
+.filter-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(70, 48, 71, 0.95);
+    backdrop-filter: blur(5px);
+    padding: 10px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.filter-container input[type="radio"] {
+    display: none;
+}
+
+.filter-container label {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    color: #ccc;
+    border: 1px solid transparent;
+}
+
+/* Selected State */
+.filter-container input:checked + label {
+    background: #ffffff;
+    color: #463047;
+    transform: scale(1.05);
+}
+
+/* --- Product Grid (The Core Fix) --- */
+.products-grid {
+    display: grid;
+    /* This creates a responsive grid automatically */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* --- Product Card Styling --- */
+.product-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.product-card a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Image Container - Forces Square Aspect Ratio */
+.img-box {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Keeps image square */
+    overflow: hidden;
+    background: #000;
+}
+
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fills square without stretching */
+    transition: transform 0.3s;
+}
+
+/* Text Container */
+.text-box {
+    padding: 12px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #1a1a1a, #252525);
+}
+
+.product-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.3;
+    color: #e0e0e0;
+}
+
+/* --- Utility --- */
+.hidden {
+    display: none;
+}
+
 
 /* Navigation Bar */
 .navbar {
@@ -23,147 +192,38 @@ body {
   height: auto;
 }
 
-/* Instagram Logo */
-.instagram-logo {
-  display: flex;
-  justify-content: center;
+
+.footer {
+    margin-top: auto;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #aaa;
 }
 
-.instagram-logo svg {
-  margin: 2%;
-}
+/* --- Mobile Specific Tweaks --- */
+@media (max-width: 480px) {
+    .filter-container {
+        /* Allow horizontal scrolling for filters on small phones */
+        justify-content: flex-start;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+    }
+    
+    .products-grid {
+        /* Force 2 columns on mobile */
+        grid-template-columns: 1fr 1fr; 
+        gap: 10px;
+        padding: 10px;
+    }
 
-/* Profile Image */
-.profile img {
-  width: 10%;
-  height: 20%;
-  border-radius: 100%;
-}
+    .product-card p {
+        font-size: 0.8rem; /* Slightly smaller text */
+    }
 
-/* Product Section */
-.products {
-  flex-grow: 1; /* Allows it to grow and push footer down */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  padding-bottom: 50px;
-}
-
-/* Individual Product Container */
-.product,
-.product-image {
-  border-radius: 20px;
-  padding: 10px;
-  background-color: #000000;
-  margin: 1%;
-}
-
-/* Product Images */
-.product img {
-  width: 200px; /* Responsive images */
-  height: 200px;
-  border-radius: 20%;
-}
-
-/* Product Text */
-.product p {
-  color: #FFFFFF;
-  margin: 10px 0 0;
-  font-size: 1em;
-  font-family: 'Raleway', sans-serif;
-
-}
-
-/* Product Links */
-.product a {
-  text-decoration: none;
-  color: white;
-}
-
-.footer{
-  text-align: left;
-  margin-left: 10%;
-  margin-top: auto;
-  position: relative;
-}
-
-/* Enhanced Product Text Styles */
-.products .product p {
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 0.8rem 0 0 0;
-  text-align: center;
-  letter-spacing: 0.5px;
-  background: linear-gradient(90deg, #ffffff 0%, #e0e0e0dd 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-  transition: letter-spacing 0.2s;
-  line-height: 1.4;
-  border-radius: 6px;
-  padding: 0.2rem 0.5rem;
-  box-shadow: 0 2px 8px rgba(0,98,185,0.04);
-}
-
-/* Optional: subtle hover effect */
-.products .product:hover p {
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #f5f5f5 0%, #cccccc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
-/* Responsive Adjustments for Small Screens */
-@media (max-width: 600px) {
-  .products {
-      margin-left: -10px;
-
-  }
-
-  .product,
-  .product-image {
-      max-width: 150px;
-      max-height: 150px;
-      margin: 5%;
-      margin-bottom: 15%;
-      margin-left: 0px;
-  }
-
-  .product img {
-      margin: 0px;
-  }
-
-  .product p {
-      margin-top: 0;
-  }
-
-}
-
-@media (max-width: 425px) {
-  .product,
-  .product-image {
-      max-width: 100px;
-      max-height: 100px;
-  }
-
-  .instagram-logo svg {
-      margin: 2%;
-      margin-top: 10%;
-      margin-bottom: 10%;
-  }
-
-  .profile img {
-      width: 20%;
-      height: 20%;
-      border-radius: 100%;
-  }
-
-  .navbar {
+      .navbar {
       background-color: #463047;
       width: 95%;
   }
@@ -171,61 +231,4 @@ body {
   .navbar img {
       width: 100%;
   }
-
-
-}
-
-/* Toggle Switch */
-.toggle-container {
-  display: flex;
-  justify-content: space-around;
-  position: relative;
-  background: #9d9d9d;
-  border-radius: 15px;
-  font-family: Arial, sans-serif;
-  user-select: none;
-  overflow: hidden;
-  margin-left: 5px;
-  margin-bottom: 5%;
-}
-
-.toggle-container input {
-  display: none;
-  padding: 5px;
-}
-
-.toggle-container label {
-  flex: 1;
-  text-align: center;
-  padding: 10px 0;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-  font-weight: bold;
-  color: #212121;
-  font-size: 1em;
-  font-family: 'Raleway', sans-serif;
-
-
-}
-
-/* Slider Effect */
-.toggle-slider {
-  position: absolute;
-  top: 5px;
-  bottom: 5px;
-  width: 33%;
-  background: #463047;
-  border-radius: 20px;
-  transition: 0.3s ease;
-  z-index: 1;
-}
-
-/* Highlight selected option */
-.toggle-container input:checked + label {
-  color: white;
-}
-
-.hidden {
-  display: none;
 }
