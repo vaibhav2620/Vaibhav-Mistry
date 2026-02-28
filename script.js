@@ -1,100 +1,162 @@
-// const filters = document.querySelectorAll('input[name="toggle"]');
-// const cards = document.querySelectorAll('.product-card');
-
-// filters.forEach(filter => {
-//   filter.addEventListener('change', () => {
-//     const value = filter.value;
-
-//     cards.forEach(card => {
-//       if (value === 'all' || card.dataset.category === value) {
-//         card.style.display = 'flex';
-//       } else {
-//         card.style.display = 'none';
-//       }
-//     });
-//   });
-// });
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const options = document.querySelectorAll(".toggle-container input");
-    const slider = document.querySelector(".toggle-slider");
-    const container = document.querySelector(".toggle-container");
-
-    // Margin to prevent slider from touching edges
-    const sliderMargin = 5;
-
-    function updateSlider() {
-        const totalOptions = options.length;
-        const containerWidth = container.clientWidth;
-        const optionWidth = (containerWidth - (2 * sliderMargin)) / totalOptions;
-
-        // Set slider width dynamically
-        slider.style.width = `${optionWidth}px`;
-
-        options.forEach((option, index) => {
-            if (option.checked) {
-                let leftPosition = sliderMargin + (index * optionWidth);
-                if (index === totalOptions - 1) {
-                    leftPosition = containerWidth - optionWidth - sliderMargin;
-                }
-                slider.style.left = `${leftPosition}px`;
-
-                // Show only the selected category's products
-                updateVisibility(option.value);
-            }
-        });
-    }
-
-    function updateVisibility(selectedCategory) {
-        // Convert the selected category to match product IDs
-        selectedCategory = selectedCategory.trim();
-
-        document.querySelectorAll(".product").forEach(product => {
-            const productCategory = product.id.trim(); // Fix inconsistent spacing in ID attributes
-            
-            if (productCategory === selectedCategory || selectedCategory === "all") {
-                product.classList.remove("hidden");
-            } else {
-                product.classList.add("hidden");
-            }
-        });
-    }
-
-    // Attach event listeners to all radio inputs
-    options.forEach(option => {
-        option.addEventListener("change", updateSlider);
-    });
-
-    // Ensure everything is properly calculated when resizing the window
-    window.addEventListener("resize", updateSlider);
-
-    // Initialize everything on page load
-    updateSlider();
-});
-
-
 document.addEventListener('DOMContentLoaded', () => {
+    const productsGrid = document.querySelector('.products-grid');
     const radioButtons = document.querySelectorAll('input[name="toggle"]');
-    const products = document.querySelectorAll('.product-card');
 
-    radioButtons.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            const category = e.target.value;
+    if (!productsGrid) {
+        return;
+    }
 
-            products.forEach(product => {
-                const productCategory = product.getAttribute('data-category');
+    const sheetUrl = productsGrid.dataset.sheetUrl;
 
-                if (category === 'all') {
-                    product.classList.remove('hidden');
+    function parseCsv(csvText) {
+        const rows = [];
+        let row = [];
+        let value = '';
+        let insideQuotes = false;
+
+        for (let i = 0; i < csvText.length; i += 1) {
+            const char = csvText[i];
+            const nextChar = csvText[i + 1];
+
+            if (char === '"') {
+                if (insideQuotes && nextChar === '"') {
+                    value += '"';
+                    i += 1;
                 } else {
-                    if (productCategory === category) {
-                        product.classList.remove('hidden');
-                    } else {
-                        product.classList.add('hidden');
-                    }
+                    insideQuotes = !insideQuotes;
                 }
-            });
+            } else if (char === ',' && !insideQuotes) {
+                row.push(value.trim());
+                value = '';
+            } else if ((char === '\n' || char === '\r') && !insideQuotes) {
+                if (char === '\r' && nextChar === '\n') {
+                    i += 1;
+                }
+
+                row.push(value.trim());
+                if (row.some((cell) => cell !== '')) {
+                    rows.push(row);
+                }
+
+                row = [];
+                value = '';
+            } else {
+                value += char;
+            }
+        }
+
+        if (value || row.length > 0) {
+            row.push(value.trim());
+            if (row.some((cell) => cell !== '')) {
+                rows.push(row);
+            }
+        }
+
+        return rows;
+    }
+
+    function renderProducts(products) {
+        productsGrid.innerHTML = '';
+
+        if (!products.length) {
+            productsGrid.innerHTML = '<p class="status-message">No products found in the sheet.</p>';
+            return;
+        }
+
+        const cardsMarkup = products
+            .map((product) => {
+                const category = (product.category || 'all').toLowerCase();
+                const safeName = product.name || 'Untitled Product';
+                const safeLink = product.productLink || '#';
+                const safeImage = product.photoLink || '';
+
+                return `
+                    <div class="product-card" data-category="${category}">
+                        <a href="${safeLink}" target="_blank" rel="noopener noreferrer">
+                            <div class="img-box"><img src="${safeImage}" loading="lazy" alt="${safeName}"></div>
+                            <div class="text-box"><p>${safeName}</p></div>
+                        </a>
+                    </div>
+                `;
+            })
+            .join('');
+
+        productsGrid.innerHTML = cardsMarkup;
+    }
+
+    function applyFilter(category) {
+        const products = document.querySelectorAll('.product-card');
+
+        products.forEach((product) => {
+            const productCategory = product.getAttribute('data-category');
+            const shouldShow = category === 'all' || productCategory === category;
+            product.classList.toggle('hidden', !shouldShow);
+        });
+    }
+
+    function normalizeHeader(text) {
+        return text.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+
+    function mapRowsToProducts(rows) {
+        if (!rows.length) {
+            return [];
+        }
+
+        const header = rows[0].map(normalizeHeader);
+        const nameIndex = header.indexOf('productname');
+        const photoIndex = header.indexOf('productphoto') !== -1 ? header.indexOf('productphoto') : header.indexOf('photolink');
+        const linkIndex = header.indexOf('productlink');
+        const categoryIndex = header.indexOf('category');
+
+        if (nameIndex === -1 || photoIndex === -1 || linkIndex === -1 || categoryIndex === -1) {
+            throw new Error('Sheet must contain columns: Product Name, Product Photo (or Photo Link), Product Link, Category');
+        }
+
+        return rows
+            .slice(1)
+            .map((row) => ({
+                name: row[nameIndex],
+                photoLink: row[photoIndex],
+                productLink: row[linkIndex],
+                category: row[categoryIndex],
+            }))
+            .filter((item) => item.name && item.photoLink && item.productLink && item.category);
+    }
+
+    function showError(message) {
+        productsGrid.innerHTML = `<p class="status-message">${message}</p>`;
+    }
+
+    async function loadProductsFromSheet() {
+        if (!sheetUrl || sheetUrl.includes('YOUR_SHEET_ID')) {
+            showError('Add your published Google Sheet CSV link in data-sheet-url to load products.');
+            return;
+        }
+
+        try {
+            productsGrid.innerHTML = '<p class="status-message">Loading products...</p>';
+            const response = await fetch(sheetUrl);
+
+            if (!response.ok) {
+                throw new Error(`Unable to fetch sheet data (${response.status})`);
+            }
+
+            const csvText = await response.text();
+            const rows = parseCsv(csvText);
+            const products = mapRowsToProducts(rows);
+            renderProducts(products);
+            applyFilter(document.querySelector('input[name="toggle"]:checked')?.value || 'all');
+        } catch (error) {
+            showError(`Could not load products. ${error.message}`);
+        }
+    }
+
+    radioButtons.forEach((radio) => {
+        radio.addEventListener('change', (event) => {
+            applyFilter(event.target.value);
         });
     });
+
+    loadProductsFromSheet();
 });
