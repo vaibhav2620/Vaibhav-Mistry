@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const sheetUrl = productsGrid.dataset.sheetUrl;
+    const rawSheetUrl = productsGrid.dataset.sheetUrl;
 
     function parseCsv(csvText) {
         const rows = [];
@@ -55,6 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return rows;
     }
 
+    function escapeHtml(text) {
+        return String(text)
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#39;');
+    }
+
     function renderProducts(products) {
         productsGrid.innerHTML = '';
 
@@ -65,10 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const cardsMarkup = products
             .map((product) => {
-                const category = (product.category || 'all').toLowerCase();
-                const safeName = product.name || 'Untitled Product';
-                const safeLink = product.productLink || '#';
-                const safeImage = product.photoLink || '';
+                const category = escapeHtml((product.category || 'all').toLowerCase());
+                const safeName = escapeHtml(product.name || 'Untitled Product');
+                const safeLink = escapeHtml(product.productLink || '#');
+                const safeImage = escapeHtml(product.photoLink || '');
 
                 return `
                     <div class="product-card" data-category="${category}">
@@ -98,19 +107,29 @@ document.addEventListener('DOMContentLoaded', () => {
         return text.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
+    function findHeaderIndex(header, aliases) {
+        for (const alias of aliases) {
+            const index = header.indexOf(alias);
+            if (index !== -1) {
+                return index;
+            }
+        }
+        return -1;
+    }
+
     function mapRowsToProducts(rows) {
         if (!rows.length) {
             return [];
         }
 
         const header = rows[0].map(normalizeHeader);
-        const nameIndex = header.indexOf('productname');
-        const photoIndex = header.indexOf('productphoto') !== -1 ? header.indexOf('productphoto') : header.indexOf('photolink');
-        const linkIndex = header.indexOf('productlink');
-        const categoryIndex = header.indexOf('category');
+        const nameIndex = findHeaderIndex(header, ['productname', 'name', 'title', 'producttitle', 'itemname']);
+        const photoIndex = findHeaderIndex(header, ['productphoto', 'photolink', 'imagelink', 'imageurl', 'image', 'photo', 'thumbnail']);
+        const linkIndex = findHeaderIndex(header, ['productlink', 'link', 'url', 'buylink', 'producturl', 'affiliatelink']);
+        const categoryIndex = findHeaderIndex(header, ['category', 'type', 'tag', 'section']);
 
         if (nameIndex === -1 || photoIndex === -1 || linkIndex === -1 || categoryIndex === -1) {
-            throw new Error('Sheet must contain columns: Product Name, Product Photo (or Photo Link), Product Link, Category');
+            throw new Error(`Sheet column mismatch. Found headers: ${rows[0].join(', ')}`);
         }
 
         return rows
@@ -125,24 +144,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showError(message) {
-        productsGrid.innerHTML = `<p class="status-message">${message}</p>`;
+        productsGrid.innerHTML = `<p class="status-message">${escapeHtml(message)}</p>`;
+    }
+
+    function resolveSheetCsvUrl(urlText) {
+        if (!urlText) {
+            return '';
+        }
+
+        try {
+            const url = new URL(urlText);
+            const pathMatch = url.pathname.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+
+            if (!pathMatch) {
+                return urlText;
+            }
+
+            const sheetId = pathMatch[1];
+            const gid = url.searchParams.get('gid') || '0';
+            return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${gid}`;
+        } catch {
+            return urlText;
+        }
     }
 
     async function loadProductsFromSheet() {
-        if (!sheetUrl || sheetUrl.includes('YOUR_SHEET_ID')) {
-            showError('Add your published Google Sheet CSV link in data-sheet-url to load products.');
+        if (!rawSheetUrl || rawSheetUrl.includes('YOUR_SHEET_ID')) {
+            showError('Add your Google Sheet link in data-sheet-url to load products.');
             return;
         }
 
         try {
+            const sheetCsvUrl = resolveSheetCsvUrl(rawSheetUrl);
             productsGrid.innerHTML = '<p class="status-message">Loading products...</p>';
-            const response = await fetch(sheetUrl);
+            const response = await fetch(sheetCsvUrl);
 
             if (!response.ok) {
-                throw new Error(`Unable to fetch sheet data (${response.status})`);
+                throw new Error(`Unable to fetch sheet data (${response.status}). Check sharing permissions.`);
             }
 
             const csvText = await response.text();
+
+            if (csvText.trim().startsWith('<!DOCTYPE html')) {
+                throw new Error('Received HTML instead of CSV. Use a public Google Sheet link or publish the sheet.');
+            }
+
             const rows = parseCsv(csvText);
             const products = mapRowsToProducts(rows);
             renderProducts(products);
