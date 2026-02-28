@@ -64,6 +64,42 @@ document.addEventListener('DOMContentLoaded', () => {
             .replaceAll("'", '&#39;');
     }
 
+
+    function resolveImageUrl(urlText) {
+        const raw = (urlText || '').trim();
+        if (!raw) {
+            return '';
+        }
+
+        try {
+            const url = new URL(raw);
+            const isDriveHost = url.hostname.includes('drive.google.com');
+
+            if (!isDriveHost) {
+                return raw;
+            }
+
+            const openId = url.searchParams.get('id');
+            if (openId) {
+                return `https://drive.google.com/uc?export=view&id=${openId}`;
+            }
+
+            const fileMatch = url.pathname.match(/\/file\/d\/([^/]+)/);
+            if (fileMatch) {
+                return `https://drive.google.com/uc?export=view&id=${fileMatch[1]}`;
+            }
+
+            const ucId = url.searchParams.get('id');
+            if (url.pathname === '/uc' && ucId) {
+                return `https://drive.google.com/uc?export=view&id=${ucId}`;
+            }
+
+            return raw;
+        } catch {
+            return raw;
+        }
+    }
+
     function renderProducts(products) {
         productsGrid.innerHTML = '';
 
@@ -77,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const category = escapeHtml((product.category || 'all').trim().toLowerCase());
                 const safeName = escapeHtml(product.name || 'Untitled Product');
                 const safeLink = escapeHtml(product.productLink || '#');
-                const safeImage = escapeHtml(product.photoLink || '');
+                const safeImage = escapeHtml(resolveImageUrl(product.photoLink));
 
                 return `
                     <div class="product-card" data-category="${category}">
