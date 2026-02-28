@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const cardsMarkup = products
             .map((product) => {
-                const category = escapeHtml((product.category || 'all').toLowerCase());
+                const category = escapeHtml((product.category || 'all').trim().toLowerCase());
                 const safeName = escapeHtml(product.name || 'Untitled Product');
                 const safeLink = escapeHtml(product.productLink || '#');
                 const safeImage = escapeHtml(product.photoLink || '');
@@ -108,7 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function findHeaderIndex(header, aliases) {
-        for (const alias of aliases) {
+        const normalizedAliases = aliases.map((alias) => normalizeHeader(alias));
+
+        for (const alias of normalizedAliases) {
             const index = header.indexOf(alias);
             if (index !== -1) {
                 return index;
@@ -124,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const header = rows[0].map(normalizeHeader);
         const nameIndex = findHeaderIndex(header, ['productname', 'name', 'title', 'producttitle', 'itemname']);
-        const photoIndex = findHeaderIndex(header, ['productphoto', 'photolink', 'imagelink', 'imageurl', 'image', 'photo', 'thumbnail']);
+        const photoIndex = findHeaderIndex(header, ['product photo', 'product image', 'productimage', 'photolink', 'imagelink', 'imageurl', 'image', 'photo', 'thumbnail']);
         const linkIndex = findHeaderIndex(header, ['productlink', 'link', 'url', 'buylink', 'producturl', 'affiliatelink']);
         const categoryIndex = findHeaderIndex(header, ['category', 'type', 'tag', 'section']);
 
@@ -138,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 name: row[nameIndex],
                 photoLink: row[photoIndex],
                 productLink: row[linkIndex],
-                category: row[categoryIndex],
+                category: (row[categoryIndex] || '').trim().toLowerCase(),
             }))
             .filter((item) => item.name && item.photoLink && item.productLink && item.category);
     }
