@@ -1,503 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="./assets/jpeg/titlelogo.png" type="image/icon type">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Vaibhav Mistry</title>
-    <meta name="description" content="Vaibahv Mistry Portfolio" />
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vaibhav Mistry — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#080810; --bg2:#0e0e1a; --bg3:#13131f; --surface:#1a1a2e;
+      --border:rgba(255,255,255,0.06); --accent:#7fefbd; --accent2:#5b6af0;
+      --accent3:#f0a05b; --text:#e8e8f0; --muted:#6b6b85;
+      --glow:0 0 40px rgba(127,239,189,0.15);
+      --fh:'Syne',sans-serif; --fb:'DM Mono',monospace; --fs:'Instrument Serif',serif;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--fb);font-size:15px;line-height:1.7;overflow-x:hidden;cursor:none}
+    body::before{content:'';position:fixed;inset:0;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;opacity:.4}
+    ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:var(--bg)} ::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:4px}
 
-    <link rel="stylesheet" href="style2.css" />
+    /* CURSOR */
+    #cursor-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;position:fixed;z-index:9999;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:difference;opacity:0;transition:opacity .3s}
+    #cursor-ring{width:36px;height:36px;border:1.5px solid var(--accent);border-radius:50%;position:fixed;z-index:9998;pointer-events:none;transform:translate(-50%,-50%);opacity:0;transition:width .3s,height .3s,opacity .3s}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <header class="header">
-      <div class="header__content">
-        <div class="header__logo-container">
-          <div class="header__logo-img-cont">
-            <img
-              src="photo.jpg"
-              alt="Vaibhav Mistry Logo Image"
-              class="header__logo-img"
-            />
-          </div>
-          <span class="header__logo-sub">Vaibhav Mistry</span>
-        </div>
-        <div class="header__main">
-          <ul class="header__links">
-            <li class="header__link-wrapper">
-              <a href="./index.html" class="header__link"> Home </a>
-            </li>
-            <li class="header__link-wrapper">
-              <a href="./index.html#about" class="header__link">About </a>
-            </li>
-            <li class="header__link-wrapper">
-              <a href="./index.html#projects" class="header__link">
-                Projects
-              </a>
-            </li>
-            <li class="header__link-wrapper">
-              <a href="./index.html#contact" class="header__link"> Contact </a>
-            </li>
-            <li class="header__link-wrapper">
-              <a href="./resume.html" class="header__link"> Resume </a>
-            </li>
-          </ul>
-          <div class="header__main-ham-menu-cont">
-            <img
-              src="./assets/svg/ham-menu.svg"
-              alt="hamburger menu"
-              class="header__main-ham-menu"
-            />
-            <img
-              src="./assets/svg/ham-menu-close.svg"
-              alt="hamburger menu close"
-              class="header__main-ham-menu-close d-none"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="header__sm-menu">
-        <div class="header__sm-menu-content">
-          <ul class="header__sm-menu-links">
-            <li class="header__sm-menu-link">
-              <a href="./index.html"> Home </a>
-            </li>
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5vw;background:rgba(8,8,16,.7);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:padding .4s}
+    nav.scrolled{padding:.9rem 5vw}
+    .nav-logo{font-family:var(--fh);font-weight:800;font-size:1.3rem;letter-spacing:-.02em;color:var(--text);text-decoration:none}
+    .nav-logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;position:relative;transition:color .3s}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.77,0,.175,1)}
+    .nav-links a:hover{color:var(--text)} .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
 
-            <li class="header__sm-menu-link">
-              <a href="./index.html#about"> About </a>
-            </li>
+    /* HERO */
+    #hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 5vw 80px;position:relative;overflow:hidden}
+    .hero-bg-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(127,239,189,.07) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+    .hero-bg-glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(91,106,240,.08) 0%,transparent 70%);bottom:0;left:5vw;pointer-events:none}
+    .hero-content{position:relative;z-index:2}
+    .hero-eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards;display:flex;align-items:center;gap:.8rem}
+    .hero-eyebrow::before{content:'';display:inline-block;width:32px;height:1px;background:var(--accent)}
+    .hero-name{font-family:var(--fh);font-size:clamp(3.2rem,7vw,6.5rem);font-weight:800;line-height:.95;letter-spacing:-.03em;margin-bottom:1rem;opacity:0;animation:fadeUp .8s .4s forwards}
+    .hero-name .line2{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.3);font-style:italic;font-family:var(--fs)}
+    .hero-role{font-family:var(--fh);font-size:clamp(1.1rem,2.5vw,1.6rem);font-weight:600;margin-bottom:2rem;opacity:0;animation:fadeUp .8s .55s forwards}
+    .typed-cursor{color:var(--accent);animation:blink 1s infinite}
+    .hero-desc{max-width:480px;color:var(--muted);font-size:.88rem;line-height:1.9;margin-bottom:2.8rem;opacity:0;animation:fadeUp .8s .7s forwards}
+    .hero-cta{display:flex;gap:1.2rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .85s forwards}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;font-family:var(--fb);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;cursor:none;transition:all .35s;position:relative;overflow:hidden}
+    .btn-primary{background:var(--accent);color:#080810;font-weight:500}
+    .btn-primary::before{content:'';position:absolute;inset:0;background:#fff;transform:translateX(-101%);transition:transform .35s cubic-bezier(.77,0,.175,1)}
+    .btn-primary:hover::before{transform:translateX(0)} .btn-primary:hover{box-shadow:0 8px 30px rgba(127,239,189,.3)}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+    .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+    .btn span{position:relative;z-index:1}
 
-            <li class="header__sm-menu-link">
-              <a href="./index.html#projects"> Projects </a>
-            </li>
+    /* HERO VISUAL */
+    .hero-visual{position:relative;z-index:2;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeIn 1.2s .6s forwards}
+    .hero-card{width:300px;height:380px;background:var(--surface);border:1px solid var(--border);border-radius:16px;position:relative;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.5);animation:floatCard 6s ease-in-out infinite}
+    .hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:scanLine 3s linear infinite}
+    .card-inner{padding:1rem;height:100%;display:flex;flex-direction:column;justify-content:space-between}
+    .card-tag{display:inline-flex;align-items:center;gap:.4rem;background:rgba(127,239,189,.08);border:1px solid rgba(127,239,189,.2);border-radius:100px;padding:.25rem .75rem;font-size:.7rem;color:var(--accent);letter-spacing:.08em}
+    .card-avatar{width:80px;height:80px;border-radius:50%;border:2px solid var(--accent);background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:1.8rem;color:#fff;margin:0 auto;box-shadow:0 0 30px rgba(127,239,189,.3)}
+    .card-stats{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+    .stat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:.8rem}
+    .stat-num{font-family:var(--fh);font-size:1.5rem;font-weight:700;color:var(--text)} .stat-num span{color:var(--accent)}
+    .stat-label{font-size:.65rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:.1rem}
+    .orbit{position:absolute;width:420px;height:420px;border-radius:50%;border:1px dashed rgba(127,239,189,.1);top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 20s linear infinite}
+    .orbit::after{content:'';position:absolute;width:8px;height:8px;background:var(--accent);border-radius:50%;top:-4px;left:50%;transform:translateX(-50%);box-shadow:0 0 10px var(--accent)}
+    .orbit2{width:500px;height:500px;border-color:rgba(91,106,240,.07);animation:spin 30s linear infinite reverse}
+    .orbit2::after{background:var(--accent2);box-shadow:0 0 10px var(--accent2);top:auto;bottom:-4px}
 
-            <li class="header__sm-menu-link">
-              <a href="./index.html#contact"> Contact </a>
-            </li>
-            <li class="header__sm-menu-link">
-              <a href="./resume.html" class="header__link"> Resume </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </header>
-    <section class="home-hero">
-      <div class="home-hero__content">
-        <h1 class="heading-primary">Hey,I am Vaibhav Vimal Mistry</h1>
-        <div class="home-hero__info">
-          <p class="text-primary">
-          Full Stack Developer. Problem Solver. Code Enthusiast. <br>
-          With 3+ years crafting enterprise applications using Spring Boot, Angular etc. <br>I build experiences that users love and systems that businesses trust.
-          </p>
-        </div>
-        <div class="home-hero__cta">
-          <a href="index.html#experience" class="btn btn--bg">Experience</a>
-        </div>
-      </div>
-      <div class="home-hero__socials">
-        <div class="home-hero__social">
-          <a href="https://www.linkedin.com/in/vaibhav-vimal-mistry-b2bb762a1/" class="home-hero__social-icon-link" target="_blank">
-            <img
-              src="./assets/png/linkedin-ico.png"
-              alt="icon"
-              class="home-hero__social-icon"
-            />
-          </a>
-        </div>
-        <div class="home-hero__social">
-          <a href="https://github.com/vaibhav2620" class="home-hero__social-icon-link" target="_blank">
-            <img
-              src="./assets/png/github-ico.png"
-              alt="icon"
-              class="home-hero__social-icon"
-            />
-          </a>
-        </div>
+    /* SECTION SHARED */
+    section{padding:120px 5vw;position:relative;z-index:1}
+    .section-label{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
+    .section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
+    .section-title{font-family:var(--fh);font-size:clamp(2.2rem,5vw,4rem);font-weight:800;line-height:1;letter-spacing:-.03em;margin-bottom:1rem}
+    .section-title em{font-style:italic;font-family:var(--fs);color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.4)}
+    .section-desc{max-width:540px;color:var(--muted);font-size:.88rem;line-height:1.9;margin-bottom:4rem}
 
-        <div class="home-hero__social">
-          <a
-            href="https://www.instagram.com/vaibhav_mistry_/"
-            class="home-hero__social-icon-link home-hero__social-icon-link--bd-none"
-            target="_blank">
-            <img
-              src="./assets/png/insta-ico.png"
-              alt="icon"
-              class="home-hero__social-icon"
-            />
-          </a>
-        </div>
-      </div>
-      <div class="home-hero__mouse-scroll-cont">
-        <div class="mouse"></div>
-      </div>
-    </section>
-    <section id="about" class="about sec-pad">
-      <div class="main-container">
-        <h2 class="heading heading-sec heading-sec__mb-med">
-          <span class="heading-sec__main">About Me</span>
-          <span class="heading-sec__sub">
-            Here you will find more information about me, what I do, 
-            and my current skills mostly in terms of programming and technology
-          </span>
-        </h2>
-        <div class="about__content">
-          <div class="about__content-main">
-            <h3 class="about__content-title">Get to know me!</h3>
-            <div class="about__content-details">
-              <p class="about__content-details-para">
-                Hey! It's
-                <strong>Vaibhav Mistry</strong>
-                and I'm a <strong>Full Stack Developer </strong> located in
-                Mumbai. I've developed many 
-                <strong> Projects </strong>
-                , and collaborated
-                with talented people from the IT industrie to create
-                <strong>solutions for complex User problems and created digital products </strong>
-                for many business use.
-              </p>
-              <p class="about__content-details-para">
-                I'm a bit of a digital product junky. Over the years, I've used
-                hundreds of web and mobile apps in different industries and
-                verticals. Feel free to
-                <strong>contact</strong> me here.
-              </p>
-            </div>
-            <a href="#contact" class="btn btn--med btn--theme dynamicBgClr"
-              >Contact</a
-            >
-          </div>
-          <div class="about__content-skills">
-            <h3 class="about__content-title">My Skills</h3>
-            <h6 class="about__content-title">Backend</h6>
-            <div class="skills">
-              <div class="skills__skill">Spring</div>
-              <div class="skills__skill">Java</div>
-              <div class="skills__skill">JUnit</div>
-              <div class="skills__skill">Maven</div>
-              <div class="skills__skill">MySQL</div>
-              <div class="skills__skill">JDBC</div>
-              <div class="skills__skill">Hibernate</div>
-              <div class="skills__skill">npm</div>
-              <div class="skills__skill">Swagger</div>
-              
-              
-              
-              <!-- <div class="skills__skill">Angular</div> -->
-              <!-- <div class="skills__skill">Web technologies</div> -->
-              <!-- <div class="skills__skill">CSS</div> -->
-              <!-- <div class="skills__skill">JavaScript</div> -->
-              <!-- <div class="skills__skill">Relational DB's</div>
-                <div class="skills__skill">Git</div>
-                <div class="skills__skill">Jenkins</div>
-                <div class="skills__skill">React</div>
-                <div class="skills__skill">Wordpress</div>
-                <div class="skills__skill">Graphic designing</div> -->
-            </div>
-            <h6 class="about__content-title">Frontend</h6>
-            <div class="skills">
-                <!-- <div class="skills__skill">Spring Framework</div>
-                    <div class="skills__skill">Java</div> -->
-                    <div class="skills__skill">Angular</div>
-                    <div class="skills__skill">Webpack</div>
-                    <div class="skills__skill">react</div>
-                    <div class="skills__skill">Bootstrap</div>
-                    <div class="skills__skill">Jquery</div>
-                    <div class="skills__skill">SCSS</div>
+    /* ABOUT */
+    #about{background:var(--bg2)}
+    .about-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:6rem;align-items:center}
+    .about-facts{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2rem}
+    .fact{padding:1.4rem;background:var(--bg3);border:1px solid var(--border);border-radius:10px;transition:border-color .3s,transform .3s}
+    .fact:hover{border-color:rgba(127,239,189,.3);transform:translateY(-3px)}
+    .fact-num{font-family:var(--fh);font-size:2rem;font-weight:800;color:var(--accent)}
+    .fact-desc{font-size:.75rem;color:var(--muted);margin-top:.3rem}
+    .about-text p{color:var(--muted);font-size:.9rem;line-height:2;margin-bottom:1.2rem}
+    .about-text p strong{color:var(--text);font-weight:400}
+    .about-tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+    .tag{padding:.35rem .9rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:100px;font-size:.72rem;color:var(--muted);letter-spacing:.06em;transition:all .3s}
+    .tag:hover{border-color:var(--accent);color:var(--accent)}
 
-                    
-                    <!-- <div class="skills__skill">Relational DB's</div>
-                        <div class="skills__skill">Git</div>
-                        <div class="skills__skill">Jenkins</div>
-                        <div class="skills__skill">Wordpress</div>
-                        <div class="skills__skill">Graphic designing</div> -->
-                    </div>
-                    <h6 class="about__content-title">Others</h6>
-                    <div class="skills">
-                        <!-- <div class="skills__skill">Spring Framework</div>
-                            <div class="skills__skill">Java</div> -->
-                            <!-- <div class="skills__skill">Angular</div>
-                                <div class="skills__skill">HTML</div>
-                                <div class="skills__skill">CSS</div>
-                                <div class="skills__skill">JavaScript</div>
-                                <div class="skills__skill">React</div> -->
-                                <div class="skills__skill">Design Patterns</div>
-                                <div class="skills__skill">putty </div>
-                                <div class="skills__skill">WinSCP</div>
-                                <div class="skills__skill">Jenkins CI/CD</div>
-                                <div class="skills__skill">Github pages</div>
-              <div class="skills__skill">Jenkins</div>
-              <div class="skills__skill">Wordpress</div>
-              <div class="skills__skill">Heroku</div>
-            </div>
-          </div>
+    /* SKILLS */
+    #skills{background:var(--bg)}
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+    .skill-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.8rem;position:relative;overflow:hidden;transition:transform .35s,border-color .35s,box-shadow .35s}
+    .skill-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(127,239,189,.04),transparent);opacity:0;transition:opacity .35s}
+    .skill-card:hover{transform:translateY(-6px);border-color:rgba(127,239,189,.25);box-shadow:var(--glow)}
+    .skill-card:hover::before{opacity:1}
+    .skill-icon{font-size:1.6rem;margin-bottom:1rem;display:block}
+    .skill-name{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.4rem;color:var(--text)}
+    .skill-items{font-size:.75rem;color:var(--muted);line-height:1.8}
+    .skill-bar-wrap{margin-top:1rem;height:2px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+    .skill-bar{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.25,.46,.45,.94)}
+
+    /* PROJECTS */
+    #projects{background:var(--bg2)}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.8rem}
+    .project-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .4s,border-color .4s,box-shadow .4s}
+    .project-card:hover{transform:translateY(-8px);border-color:rgba(127,239,189,.3);box-shadow:0 30px 60px rgba(0,0,0,.4),var(--glow)}
+    .proj-band{height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent))}
+    .project-img{height:180px;position:relative;overflow:hidden;background:var(--surface);display:flex;align-items:center;justify-content:center}
+    .project-img-inner{font-size:3rem;transition:transform .5s}
+    .project-card:hover .project-img-inner{transform:scale(1.1)}
+    .project-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,var(--bg3))}
+    .project-body{padding:1.6rem}
+    .project-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.9rem}
+    .project-tag{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:rgba(127,239,189,.07);border:1px solid rgba(127,239,189,.15);padding:.2rem .6rem;border-radius:4px}
+    .project-name{font-family:var(--fh);font-size:1.15rem;font-weight:700;margin-bottom:.5rem;color:var(--text)}
+    .project-desc{font-size:.8rem;color:var(--muted);line-height:1.8;margin-bottom:1.2rem}
+    .project-links{display:flex;gap:1rem}
+    .project-link{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--muted);display:flex;align-items:center;gap:.4rem;transition:color .3s}
+    .project-link:hover{color:var(--accent)} .project-link svg{width:13px;height:13px}
+
+    /* EXPERIENCE */
+    #experience{background:var(--bg)}
+    .timeline{position:relative;padding-left:2rem}
+    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent)}
+    .timeline-item{position:relative;padding:0 0 3.5rem 2.5rem;opacity:0;transform:translateX(-20px);transition:opacity .6s,transform .6s}
+    .timeline-item.visible{opacity:1;transform:none}
+    .timeline-item::before{content:'';position:absolute;left:-2.5rem;top:.3rem;width:9px;height:9px;background:var(--accent);border:2px solid var(--bg);border-radius:50%;box-shadow:0 0 10px var(--accent)}
+    .timeline-date{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+    .timeline-role{font-family:var(--fh);font-size:1.2rem;font-weight:700;margin-bottom:.2rem}
+    .timeline-company{font-size:.82rem;color:var(--muted);margin-bottom:.9rem}
+    .timeline-desc{font-size:.82rem;color:var(--muted);line-height:1.9;max-width:580px}
+
+    /* CERTIFICATIONS */
+    #certs{background:var(--bg2)}
+    .certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.4rem}
+    .cert-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.6rem;display:flex;gap:1.2rem;align-items:flex-start;transition:border-color .3s,transform .3s}
+    .cert-card:hover{border-color:rgba(127,239,189,.3);transform:translateY(-3px)}
+    .cert-icon{font-size:2rem;flex-shrink:0}
+    .cert-name{font-family:var(--fh);font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.3rem}
+    .cert-org{font-size:.75rem;color:var(--accent);margin-bottom:.3rem}
+    .cert-date{font-size:.7rem;color:var(--muted)}
+
+    /* CONTACT */
+    #contact{background:var(--bg);text-align:center}
+    #contact .section-label{justify-content:center}
+    .contact-cta{font-family:var(--fh);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.03em;margin-bottom:2.5rem;line-height:1.1}
+    .contact-cta em{font-style:italic;font-family:var(--fs);color:var(--accent)}
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;max-width:700px;margin:0 auto 3rem}
+    .contact-item{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:1.6rem;text-decoration:none;transition:border-color .3s,transform .3s,box-shadow .3s;display:flex;flex-direction:column;align-items:center;gap:.6rem}
+    .contact-item:hover{border-color:rgba(127,239,189,.3);transform:translateY(-4px);box-shadow:var(--glow)}
+    .contact-icon{font-size:1.5rem} .contact-label{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .contact-value{font-size:.82rem;color:var(--text)}
+
+    /* FOOTER */
+    footer{padding:2rem 5vw;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:.72rem;color:var(--muted);position:relative;z-index:1}
+    footer a{color:var(--muted);text-decoration:none;transition:color .3s} footer a:hover{color:var(--accent)}
+
+    /* MARQUEE */
+    .marquee-section{overflow:hidden;padding:2rem 0;background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1}
+    .marquee-track{display:flex;gap:3rem;animation:marquee 22s linear infinite;white-space:nowrap;width:max-content}
+    .marquee-item{font-family:var(--fh);font-size:.75rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:1.5rem}
+    .marquee-item::before{content:'●';color:var(--accent);font-size:.5rem}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* KEYFRAMES */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    @keyframes scanLine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+    @keyframes floatCard{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(-2deg)}}
+
+    /* MOBILE */
+    @media(max-width:900px){
+      #hero{grid-template-columns:1fr;text-align:center}
+      .hero-visual{display:none}
+      .hero-cta{justify-content:center}
+      .about-grid{grid-template-columns:1fr;gap:3rem}
+      .nav-links{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">VM<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certs">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-bg-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Open to Opportunities</div>
+    <h1 class="hero-name">Vaibhav<br><span class="line2">Mistry.</span></h1>
+    <div class="hero-role"><span id="typed-text"></span><span class="typed-cursor">|</span></div>
+    <p class="hero-desc">Java Full-Stack Developer with 3+ years building scalable web applications using Spring Boot, Angular &amp; Oracle DB. Currently at Accenture, based in Mumbai.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary"><span>View My Work</span></a>
+      <a href="#contact" class="btn btn-ghost"><span>Get in Touch</span></a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="orbit"></div>
+    <div class="orbit orbit2"></div>
+    <div class="hero-card">
+      <div class="card-inner">
+        <div class="card-tag">&#9679; Accenture &middot; Analyst</div>
+        <div class="card-avatar">VM</div>
+        <div class="card-stats">
+          <div class="stat"><div class="stat-num">3<span>+</span></div><div class="stat-label">Years Exp.</div></div>
+          <div class="stat"><div class="stat-num">2</div><div class="stat-label">Companies</div></div>
+          <div class="stat"><div class="stat-num">Solution</div><div class="stat-label">Architect</div></div>
+          <div class="stat"><div class="stat-num">2<span>+</span></div><div class="stat-label">Professional Certificationa</div></div>
         </div>
       </div>
-    </section>
-    <section id="experience" class="projects sec-pad">
-      <div class="main-container">
-        <h2 class="heading heading-sec heading-sec__mb-bg">
-          <span class="heading-sec__main">Experience</span>
-          <span class="heading-sec__sub">
-            Here you will find my work experiences where I contributed to creating scalable backend services and intuitive frontend features.
-          </span>
-        </h2>
+    </div>
+  </div>
+</section>
 
-        <div class="projects__content">
-          <!-- Experience 1 -->
-          <div class="projects__row experience-row">
-            <div class="projects__row-img-cont">
-              <img src="./assets/png/download.png" alt="Accenture Logo" class="experience-logo" />
-            </div>
-            <div class="projects__row-content">
-              <h4 class="projects__row-content-title">Packaged App Development Analyst <br>(Aug 2024 – Present)</h4>
-              <p class="projects__row-content-desc">
-                Developed RESTful APIs using Spring Boot and integrated them into Angular UI components.
-                Worked on both backend and frontend functionalities, improving API performance by 30–40% and enhancing CI/CD processes.
-              </p>
-            </div>
-          </div>
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">Java 8</div><div class="marquee-item">Spring Boot</div><div class="marquee-item">Spring MVC</div><div class="marquee-item">Spring Batch</div><div class="marquee-item">Angular 9</div><div class="marquee-item">RESTful APIs</div><div class="marquee-item">Microservices</div><div class="marquee-item">Oracle DB</div><div class="marquee-item">MySQL</div><div class="marquee-item">PostgreSQL</div><div class="marquee-item">Docker</div><div class="marquee-item">Jenkins</div><div class="marquee-item">CI/CD</div><div class="marquee-item">Azure </div>
+    <div class="marquee-item">Java 8</div><div class="marquee-item">Spring Boot</div><div class="marquee-item">Spring MVC</div><div class="marquee-item">Spring Batch</div><div class="marquee-item">Angular 9</div><div class="marquee-item">RESTful APIs</div><div class="marquee-item">Microservices</div><div class="marquee-item">Oracle DB</div><div class="marquee-item">MySQL</div><div class="marquee-item">PostgreSQL</div><div class="marquee-item">Docker</div><div class="marquee-item">Jenkins</div><div class="marquee-item">CI/CD</div><div class="marquee-item">Azure </div>
+  </div>
+</div>
 
-          <!-- Experience 2 -->
-          <div class="projects__row experience-row">
-            <div class="projects__row-img-cont">
-              <img src="./assets/jpeg/Logo .png" alt="Atos/Eviden Logo" class="experience-logo" />
-            </div>
-            <div class="projects__row-content">
-              <h4 class="projects__row-content-title">Associate Consultant <br> (Sept 2022 – July 2024)</h4>
-              <p class="projects__row-content-desc">
-                Designed and developed backend microservices using Spring Boot. Collaborated with frontend teams to ensure seamless API integration and improved system performance.
-              </p>
-            </div>
-          </div>
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="section-label">Who I Am</div>
+      <div class="about-facts">
+        <div class="fact"><div class="fact-num">3+</div><div class="fact-desc">Years in industry</div></div>
+        <div class="fact"><div class="fact-num">2</div><div class="fact-desc">Companies worked at</div></div>
+        <div class="fact"><div class="fact-num">Full-Stack</div><div class="fact-desc">End-to-end feature delivery.</div></div>
+        <div class="fact"><div class="fact-num">2+</div><div class="fact-desc">Professional Certifications</div></div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Building things<br><em>that matter.</em></h2>
+      <p>Hi, I'm <strong>Vaibhav Vimal Mistry</strong> — a Java Full-Stack Developer based in <strong>Mumbai, India</strong>. I design and develop scalable web applications using <strong>Spring Boot, Angular, and Oracle DB</strong>, with a sharp eye for clean architecture and performance.</p>
+      <p>Currently a <strong>Packaged App Development Analyst at Accenture</strong>, I bridge frontend and backend teams, optimise CI/CD workflows with Jenkins, and drive real measurable impact — cutting page-load times by 30% and boosting Agile sprint velocity by 20% at ATOS.</p>
+      <p>Beyond the day job, I'm passionate about software craftsmanship, clean code, and building things that are both functional and beautiful.</p>
+      <div class="about-tags">
+        <span class="tag">Java Full-Stack</span>
+        <span class="tag">Spring Boot</span>
+        <span class="tag">Angular</span>
+        <span class="tag">Microservices</span>
+        <span class="tag">Agile / Scrum</span>
+        <span class="tag">Mumbai</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-          <!-- Experience 3 -->
-          <div class="projects__row experience-row">
-            <div class="projects__row-img-cont">
-              <img src="./assets/jpeg/wipro.png" alt="Wipro Logo" class="experience-logo" />
-            </div>
-            <div class="projects__row-content">
-              <h4 class="projects__row-content-title">Summer Intern <br>(Mar 2022 – Jun 2022)</h4>
-              <p class="projects__row-content-desc">
-                Built backend modules with Spring Boot and contributed to architectural documentation using UML diagrams for efficient project tracking.
-              </p>
-            </div>
-          </div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">What I Do</div>
+  <h2 class="section-title reveal">My <em>Toolkit.</em></h2>
+  <p class="section-desc reveal">The technologies and tools I use to bring ideas to life.</p>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <span class="skill-icon">&#9749;</span>
+      <div class="skill-name">Backend &mdash; Java</div>
+      <div class="skill-items">Java 8 &middot; J2EE &middot; Spring Boot &middot; Spring MVC &middot; Spring Batch &middot; Microservices &middot; RESTful APIs</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="92"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">&#128736;</span>
+      <div class="skill-name">Frontend</div>
+      <div class="skill-items">Angular 9 &middot; UI/UX &middot; HTML &middot; CSS &middot; JavaScript &middot; Web Stack</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="85"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">&#128451;</span>
+      <div class="skill-name">Databases</div>
+      <div class="skill-items">Oracle 19c &middot; MySQL &middot; Database Design &middot; Query Optimisation</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="82"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">&#9881;&#65039;</span>
+      <div class="skill-name">DevOps &amp; Tools</div>
+      <div class="skill-items">Jenkins &middot; Docker &middot; CI/CD Pipeline &middot; GitHub &middot; PuTTY &middot; Webdriver IO</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">&#127959;&#65039;</span>
+      <div class="skill-name">Software Design</div>
+      <div class="skill-items">OOP &middot; AOP &middot; UML Diagrams &middot; Design Patterns &middot; DSA &middot; Agile / Scrum</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="88"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">&#9729;&#65039;</span>
+      <div class="skill-name">Cloud</div>
+      <div class="skill-items">Microsoft Azure &middot; AZ-900 Certified &middot; Cloud Fundamentals</div>
+      <div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">My Work</div>
+  <h2 class="section-title reveal">Selected <em>Projects.</em></h2>
+  <p class="section-desc reveal">Key highlights from my professional work and personal projects.</p>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="proj-band"></div>
+      <div class="project-img"><div class="project-img-inner">&#127981;</div><div class="project-img-overlay"></div></div>
+      <div class="project-body">
+        <div class="project-tags"><span class="project-tag">Spring Boot</span><span class="project-tag">Spring Batch</span><span class="project-tag">Oracle DB</span></div>
+        <div class="project-name">Enterprise Batch Processing System</div>
+        <div class="project-desc">High-throughput Spring Batch pipeline at Accenture processing millions of records with fault-tolerant retry logic, real-time monitoring dashboards, and optimised data throughput.</div>
+        <div class="project-links">
+          <a href="#" class="project-link"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>Case Study</a>
         </div>
       </div>
-    </section>
-       
-    <section id="projects" class="projects sec-pad">
-      <div class="main-container">
-        <h2 class="heading heading-sec heading-sec__mb-bg">
-          <span class="heading-sec__main">Projects</span>
-          <span class="heading-sec__sub">
-            Here you will find some of the personal and clients projects that I created with each project containing its own case study
-          </span>
-        </h2>
-
-        <div class="projects__content">
-          <div class="projects__row">
-            <div class="projects__row-img-cont">
-              <img
-                src="./assets/jpeg/Media (1).jpg"
-                alt="Software Screenshot"
-                class="projects__row-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="projects__row-content">
-              <h3 class="projects__row-content-title">Penhava.co</h3>
-              <p class="projects__row-content-desc">
-                E-commerse webapplication build as a capstone project using 
-                spring MVC Framework that included section for both customer section 
-                and admin section i.e. Business Owner section for cataloging and adding Discount Coupons 
-              </p>
-              <a
-                href="./project-1.html"
-                class="btn btn--med btn--theme dynamicBgClr"
-                target="_blank"
-                >Case Study</a
-              >
-            </div>
-          </div>
-          <div class="projects__row">
-            <div class="projects__row-img-cont">
-              <img
-                src="./assets/jpeg/Media (2).jpg"
-                alt="Software Screenshot"
-                class="projects__row-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="projects__row-content">
-              <h3 class="projects__row-content-title">Urban Help</h3>
-              <p class="projects__row-content-desc">
-                Online Service Management System develeloped to fulfill the customers need 
-                of getting utility services from the servics providers who can register and 
-                assign the service request for themselfs.
-              </p>
-              <a
-                href="./project-2.html"
-                class="btn btn--med btn--theme dynamicBgClr"
-                target="_blank"
-                >Case Study</a
-              >
-            </div>
-          </div>
-          <div class="projects__row">
-            <div class="projects__row-img-cont">
-              <img
-                src="./assets/jpeg/Media (3).png"
-                alt="Software Screenshot"
-                class="projects__row-img"
-                loading="lazy"
-              />
-            </div>
-            <div class="projects__row-content">
-              <h3 class="projects__row-content-title">PEBOSA</h3>
-              <p class="projects__row-content-desc">
-                Political Evaluation based on Sentiment Analysis (Big Data Analysis)
-                It is a Big data system that Analysis the Public sentiment on the Political
-                candidates as positive or negative based on the social media support 
-                they get.
-              </p>
-              <a
-                href="./project-3.html"
-                class="btn btn--med btn--theme dynamicBgClr"
-                target="_blank"
-                >Case Study</a
-              >
-            </div>
-          </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="proj-band" style="background:linear-gradient(90deg,#5b6af0,#7fefbd)"></div>
+      <div class="project-img"><div class="project-img-inner">&#128279;</div><div class="project-img-overlay"></div></div>
+      <div class="project-body">
+        <div class="project-tags"><span class="project-tag">Spring Boot</span><span class="project-tag">Angular 9</span><span class="project-tag">Jenkins</span></div>
+        <div class="project-name">Full-Stack Integration Platform</div>
+        <div class="project-desc">At ATOS (Eviden), led end-to-end integration of Spring Boot APIs with Angular and Oracle DB. Reduced page load time by 30% and cut code conflicts by 15% via GitHub best practices.</div>
+        <div class="project-links">
+          <a href="#" class="project-link"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>Case Study</a>
         </div>
       </div>
-    </section>
-    <section id="contact" class="contact sec-pad dynamicBg">
-      <div class="main-container">
-        <h2 class="heading heading-sec heading-sec__mb-med">
-          <span class="heading-sec__main heading-sec__main--lt">Contact</span>
-          <span class="heading-sec__sub heading-sec__sub--lt">
-            Feel Free to Contact me anytime
-          </span>
-        </h2>
-        <div class="contact__form-container">
-          <h4 class="heading heading-sm text-lt">Vaibhav Mistry</h4>
-            <p class="main-footer__short-desc">
-              Contact No.: 7039246827  | &nbsp;&nbsp;  Full Stack Developer<br>
-              Result Driven Full Stack Developer with passion of developing new solutions for complex problems.
-            </p>
+    </div>
+    <div class="project-card reveal">
+      <div class="proj-band" style="background:linear-gradient(90deg,#f0a05b,#f05b8a)"></div>
+      <div class="project-img"><div class="project-img-inner">&#128202;</div><div class="project-img-overlay"></div></div>
+      <div class="project-body">
+        <div class="project-tags"><span class="project-tag">Big Data</span><span class="project-tag">Research</span><span class="project-tag">ICETTSE 2022</span></div>
+        <div class="project-name">Political Evaluation using Big Data</div>
+        <div class="project-desc">Award-winning research paper at ICETTSE May 2022. Analysed large-scale political datasets using Big Data techniques — earned the Best Research Paper Award.</div>
+        <div class="project-links">
+          <a href="#" class="project-link"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>Read Paper</a>
         </div>
       </div>
-    </section>
-    <footer class="main-footer">
-      <div class="main-container">
-        <div class="main-footer__upper">
-          <div class="main-footer__row main-footer__row-1">
-            <h2 class="heading heading-sm main-footer__heading-sm">
-              <span>Social</span>
-            </h2>
-            <div class="main-footer__social-cont">
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/linkedin-ico.png"
-                  alt="icon"
-                />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/github-ico.png"
-                  alt="icon"
-                />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/twitter-ico.png"
-                  alt="icon"
-                />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/yt-ico.png"
-                  alt="icon"
-                />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon main-footer__icon--mr-none"
-                  src="./assets/png/insta-ico.png"
-                  alt="icon"
-                />
-              </a>
-            </div>
-          </div>
-          <div class="main-footer__row main-footer__row-2">
-            <h4 class="heading heading-sm text-lt">Vaibhav Mistry</h4>
-            <p class="main-footer__short-desc">
-              Packaged App Development Analyst @Accenture <br>
-              Result Driven Full Stack Developer with passion of developing new solutions for complex problems.
-            </p>
-          </div>
-        </div>
+    </div>
+  </div>
+</section>
 
-        <!-- If you give me some credit or shoutout here by linking to my website, then it will be a big thing for me and will help me a lot :) -->
-        <div class="main-footer__lower">
-          &copy; Copyright 2024. Made by Vaibhav Mistry
-        </div>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label reveal">Career</div>
+  <h2 class="section-title reveal">Experience &amp; <em>Education.</em></h2>
+  <p class="section-desc reveal">My professional journey so far.</p>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">Aug 2024 &mdash; Present</div>
+      <div class="timeline-role">Packaged App Development Analyst</div>
+      <div class="timeline-company">Accenture &middot; Mumbai, India</div>
+      <div class="timeline-desc">Developing and enhancing scalable Spring Boot backend applications. Implementing Spring MVC and Spring Batch for efficient data processing. Spearheading collaboration between Angular frontend and backend teams, and enhancing CI/CD workflows using Jenkins and GitHub.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Sept 2022 &mdash; July 2024</div>
+      <div class="timeline-role">Associate Consultant</div>
+      <div class="timeline-company">ATOS (now Eviden) &middot; Mumbai, India</div>
+      <div class="timeline-desc">Designed RESTful APIs with Spring Boot. Reduced frontend page load time by 30% through optimised Angular development. Led Spring Boot&ndash;Angular&ndash;Oracle DB integration and cut code conflicts by 15%. Boosted Agile sprint velocity by 20%. Recognised with the FedEx &ldquo;Super Star&rdquo; Agile Award (Dec 2023).</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">March 2022 &mdash; June 2022</div>
+      <div class="timeline-role">Summer Intern</div>
+      <div class="timeline-company">Wipro &middot; Remote</div>
+      <div class="timeline-desc">Developed backend services using Spring Boot and Spring MVC as part of a 10-member remote team. Assisted in designing system architecture with UML diagrams and gained hands-on experience in API development and backend integration.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2018 &mdash; 2022</div>
+      <div class="timeline-role">B.E. &mdash; Information Technology &middot; CGPA: 8.23</div>
+      <div class="timeline-company">Shree L.R. Tiwari College of Engineering &middot; Mumbai University</div>
+      <div class="timeline-desc">Graduated with a strong academic foundation in software engineering and distributed systems. Published award-winning research on Political Evaluation using Big Data at ICETTSE 2022. Achieved Microsoft Azure AZ-900 certification shortly after graduation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS & AWARDS -->
+<section id="certs">
+  <div class="section-label reveal">Recognition</div>
+  <h2 class="section-title reveal">Certs &amp; <em>Awards.</em></h2>
+  <p class="section-desc reveal">Milestones and recognition along the way.</p>
+  <div class="certs-grid">
+    <div class="cert-card reveal">
+      <div class="cert-icon">🤖</div>
+      <div>
+        <div class="cert-name">Oracle Certified: AI Foundation Associate</div>
+        <div class="cert-org">Oracle &middot; AI Foundation</div>
+        <div class="cert-date">February 2026</div>
       </div>
-    </footer>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">&#9729;&#65039;</div>
+      <div>
+        <div class="cert-name">Microsoft Azure Fundamentals</div>
+        <div class="cert-org">Microsoft &middot; AZ-900</div>
+        <div class="cert-date">December 2022</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">&#11088;</div>
+      <div>
+        <div class="cert-name">FedEx &ldquo;Super Star of PI or CY23-04&rdquo;</div>
+        <div class="cert-org">Agile Award &middot; Client Recognition at ATOS</div>
+        <div class="cert-date">December 2023</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">&#127942;</div>
+      <div>
+        <div class="cert-name">Best Research Paper Award</div>
+        <div class="cert-org">ICETTSE &middot; Political Evaluation using Big Data</div>
+        <div class="cert-date">May 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="./index.js"></script>
-    <script type="module" >
-      // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-  import { getDatabase, ref , set, get, child} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">Let's Connect</div>
+  <div class="contact-cta reveal">Have a project?<br>Let's build it <em>together.</em></div>
+  <div class="contact-grid reveal">
+    <a href="mailto:vmistry2620@gmail.com" class="contact-item">
+      <div class="contact-icon">&#9993;&#65039;</div>
+      <div class="contact-label">Email</div>
+      <div class="contact-value">vmistry2620@gmail.com</div>
+    </a>
+    <a href="https://linkedin.com/in/vaibhavmistry" target="_blank" class="contact-item">
+      <div class="contact-icon">&#128188;</div>
+      <div class="contact-label">LinkedIn</div>
+      <div class="contact-value">vaibhavmistry</div>
+    </a>
+    <a href="tel:+917039246827" class="contact-item">
+      <div class="contact-icon">&#128241;</div>
+      <div class="contact-label">Phone</div>
+      <div class="contact-value">+91 70392 46827</div>
+    </a>
+  </div>
+  <a href="mailto:vmistry2620@gmail.com" class="btn btn-primary reveal" style="margin:0 auto;display:inline-flex;">
+    <span>Say Hello &rarr;</span>
+  </a>
+</section>
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBQFtARrEkun3d946oIa9Ze4JEmyEsktgA",
-    authDomain: "contactme-c0a6f.firebaseapp.com",
-    projectId: "contactme-c0a6f",
-    storageBucket: "contactme-c0a6f.appspot.com",
-    messagingSenderId: "210696355469",
-    appId: "1:210696355469:web:c45928dd98c99b781cecc4",
-    measurementId: "G-8SBKLB7DMS"
-  };
+<footer>
+  <span>&copy; 2025 Vaibhav Vimal Mistry. Crafted with &hearts; in Mumbai</span>
+  <span>&#127470;&#127475; Mumbai</span>
+</footer>
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+<script>
+  // CURSOR
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx = -200, my = -200, rx = -200, ry = -200, cursorActive = false;
 
-
-  const db = getDatabase(app);
-
-
-  document.getElementById("submit").addEventListener('click',function(e){
-    e.preventDefault();    
-    set(ref(db, "user/" +document.getElementById("name").value),
-    {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        Message : document.getElementById("message").value
-    });
-    alert("Message Received! I will Contact you soon");
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX; my = e.clientY;
+    if (!cursorActive) {
+      cursorActive = true;
+      rx = mx; ry = my;
+      dot.style.opacity = '1';
+      ring.style.opacity = '0.5';
+    }
   });
-    </script>
 
-  </body>
+  (function animCursor() {
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+
+  // NAVBAR SCROLL
+  var navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', function() {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // TYPED TEXT
+  var roles = ['Java Full-Stack Developer','Spring Boot Engineer','Angular Developer','Packaged App Dev Analyst'];
+  var rIdx = 0, cIdx = 0, deleting = false;
+  var typedEl = document.getElementById('typed-text');
+
+  function type() {
+    var word = roles[rIdx];
+    typedEl.textContent = deleting ? word.slice(0, cIdx--) : word.slice(0, cIdx++);
+    var delay = deleting ? 60 : 110;
+    if (!deleting && cIdx > word.length) { delay = 2000; deleting = true; }
+    if (deleting && cIdx < 0) { deleting = false; rIdx = (rIdx + 1) % roles.length; cIdx = 0; delay = 400; }
+    setTimeout(type, delay);
+  }
+  setTimeout(type, 1000);
+
+  // SCROLL REVEAL
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        var bar = entry.target.querySelector('.skill-bar');
+        if (bar) bar.style.width = bar.dataset.width + '%';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+  document.querySelectorAll('.timeline-item').forEach(function(el, i) {
+    el.style.transitionDelay = (i * 0.15) + 's';
+    observer.observe(el);
+  });
+</script>
+</body>
 </html>
