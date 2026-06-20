@@ -115,6 +115,14 @@ header {
     margin: 0 auto;
 }
 
+
+.status-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #ddd;
+    padding: 24px 12px;
+}
+
 /* --- Product Card Styling --- */
 .product-card {
     background: var(--card-bg);
